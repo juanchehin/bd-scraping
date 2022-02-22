@@ -3,7 +3,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 async function main() {
-    console.log("pasa 1")
+    console.log("pasa")
     const browser = await puppeteer.launch({ headless: false });
     const page = await browser.newPage();
 
@@ -14,26 +14,13 @@ async function main() {
     await page.type('[type="password"]', process.env.password);
 
     // click para acceder mediante el login
-    // await Promise.all([
     await page.click('[type="submit"]')
-        // await page.waitForNavigation({ waitUntil: 'networkidle0' })
-    await page.setDefaultNavigationTimeout(0);
-    // ]);
+        // espera a cargar sitio
+    await page.waitForTimeout(11000);
 
-    // click en boton de corazones
-    // await Promise.all([
-    console.log("pasa")
-    await page.click('button.prod-ProductCTA--primary')
-        // esperar
-    console.log("pasa 2")
-        // page.click('button.prod-ProductCTA--primary')
-        //     // esperar
-        // console.log("pasa 3")
-        // page.click('button.prod-ProductCTA--primary')
-        //     // esperar
-        // console.log("pasa 4")
-        // page.waitForNavigation({ waitUntil: 'networkidle0' })
-        // ]);
+    let f = await page.$(".encounters-actions__item.encounters-actions__item--yes");
+    await f.click();
+
 }
 
 main();
