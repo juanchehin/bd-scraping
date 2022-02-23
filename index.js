@@ -13,11 +13,14 @@ async function main() {
     await page.type('[type="password"]', process.env.password);
 
     // click para acceder mediante el login
-    await page.click('[type="submit"]')
-        // espera a cargar sitio
-    await page.waitForTimeout(11000);
+    await page.click('[type="submit"]', { waitUntil: 'networkidle0' })
 
-    let button = await page.$(".encounters-actions__item.encounters-actions__item--yes");
+
+    await page.waitForTimeout(20000); // espera a cargar sitio
+
+    console.log("pasa ")
+
+    // let button = await page.$(".encounters-actions__item.encounters-actions__item--yes");
     page.waitForTimeout(25000)
 
     var i
@@ -28,9 +31,15 @@ async function main() {
 
         console.log("pasa 1", i)
 
-        await button.click() // Clicking the link will indirectly cause a navigation
+        try {
+            console.log("try", i)
+            await button.click() // Clicking the link will indirectly cause a navigation
+        } catch (e) {
+            console.log("exception", e)
+        }
 
         console.log("pasa 2", i)
+
     }
 }
 
